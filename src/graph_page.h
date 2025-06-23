@@ -6,6 +6,15 @@
 #define _USE_MATH_DEFINES 1
 #include <cmath>
 
+// for zoom
+#include <qwt_plot_magnifier.h>
+#include <qwt_plot_panner.h>
+#include <qwt_event_pattern.h>
+#include <QKeyEvent>
+#include <QWheelEvent>
+#include <QDrag>
+#include <QMimeData>
+
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
 #include <QPrintDialog>
@@ -67,7 +76,6 @@
 class GraphPage : public QWidget, public Ui::GraphPage
 {
     Q_OBJECT
-
 public:
 
     /**
@@ -87,9 +95,9 @@ public:
      * @param[in] variableName The DDS topic member name.
      */
     void addVariable(const QString& topicName, const QString& variableName);
-
+    bool eventFilter(QObject* obj, QEvent* event);
+    bool m_userZoomed; // Add this to track zoom state
 private slots:
-
     /**
      * @brief Set the attributes of the graph based on the control widgets.
      */
