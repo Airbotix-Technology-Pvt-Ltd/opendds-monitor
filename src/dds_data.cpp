@@ -392,6 +392,11 @@ QVariant CommonData::readValue(const QString& topicName,
 void CommonData::flushSamples(const QString& topicName)
 {
     std::shared_ptr<TopicInfo> topicInfo = getTopicInfo(topicName);
+    if (!topicInfo)
+    {
+        return;
+    }
+
     if (topicInfo->typeMode() == TypeDiscoveryMode::TypeCode)
     {
         flushStaticSamples(topicName);
